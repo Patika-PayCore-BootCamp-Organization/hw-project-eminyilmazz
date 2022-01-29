@@ -6,10 +6,8 @@ import com.ecommorce.eservice.service.impl.ProductServiceImpl;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +25,11 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById (@PathVariable(value = "id") Long productId) throws Exception {
-        Product product = productService.findById(productId);
-        return ResponseEntity.ok().body(product);
+        return productService.findById(productId);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteById(@PathVariable (value = "id") Long productId) throws Exception {
+        productService.delete(productId);
+        return ResponseEntity.ok().build();
     }
 }
