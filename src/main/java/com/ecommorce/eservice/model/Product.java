@@ -1,4 +1,4 @@
-package com.ecommorce.eservice.Model;
+package com.ecommorce.eservice.model;
 
 public class Product {
     private Integer id;
