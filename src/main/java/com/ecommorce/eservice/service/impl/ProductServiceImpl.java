@@ -18,10 +18,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findById(Long productId) throws Exception {
+    public ResponseEntity<Product> findById(Long productId) throws Exception {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new Exception ("Product ID: " + productId + " not found"));
-        return product;
+        return ResponseEntity.ok().body(product);
     }
 
     @Override
@@ -30,12 +30,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean delete(Product product) {
-        return false;
+    public boolean delete(Long id) throws Exception{
+        if(!productRepository.existsById(id)){
+            throw new Exception("Product ID: " + id + "not found.");
+        }else{
+            productRepository.deleteById(id);
+            return true;
+        }
     }
 
     @Override
     public ResponseEntity<Product> save(Product product) {
-        return null;
+        Product prod = productRepository.save(product);
+
+        return ResponseEntity.ok().body(prod);
     }
 }

@@ -9,11 +9,11 @@ public interface ProductService {
 
     List<Product> findAll();
 
-    Product findById(Long id) throws Exception;
+    ResponseEntity<Product> findById(Long id) throws Exception;
 
     Product update(Product product);
 
-    boolean delete(Product product);
+    boolean delete(Long id) throws Exception;
 
     ResponseEntity<Product> save(Product product);
 }
