@@ -1,5 +1,6 @@
 package com.ecommorce.eservice;
 
+import com.ecommorce.eservice.model.Customer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,5 +10,6 @@ public class EserviceApplication {
     public static void main(String[] args) {
         SpringApplication.run(EserviceApplication.class, args);
     }
+    Customer customer = new Customer();
 
 }
