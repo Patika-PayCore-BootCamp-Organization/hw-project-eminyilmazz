@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @Entity
+@Table(name = "products")
 public class Product {
     @Id
     @Column(name = "id", nullable = false)

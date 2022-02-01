@@ -31,10 +31,10 @@ public class Customer{
     private String password;
 
 
-    @Column
-    private List<Order> orderHistory;
+//    @Column
+//    private List<Order> orderHistory;
 
 
-    @Column
-    private Cart userCart;
+//    @Column
+//    private Cart userCart;
 }
