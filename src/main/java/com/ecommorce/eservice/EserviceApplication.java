@@ -10,6 +10,4 @@ public class EserviceApplication {
     public static void main(String[] args) {
         SpringApplication.run(EserviceApplication.class, args);
     }
-    Customer customer = new Customer();
-
 }

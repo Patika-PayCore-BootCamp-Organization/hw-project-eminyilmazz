@@ -1,15 +1,12 @@
 package com.ecommorce.eservice.controller;
 
 import com.ecommorce.eservice.model.Product;
-import com.ecommorce.eservice.service.ProductService;
 import com.ecommorce.eservice.service.impl.ProductServiceImpl;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -19,7 +16,7 @@ public class ProductController {
     private ProductServiceImpl productService;
 
     @GetMapping("/all")
-    public @NotNull List<Product> getProducts() {
+    public List<Product> getProducts() {
         return productService.findAll();
     }
 
@@ -31,5 +28,9 @@ public class ProductController {
     public ResponseEntity deleteById(@PathVariable (value = "id") Long productId) throws Exception {
         productService.delete(productId);
         return ResponseEntity.ok().build();
+    }
+    @PutMapping ("/update")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product) throws Exception {
+        return productService.update(product);
     }
 }
