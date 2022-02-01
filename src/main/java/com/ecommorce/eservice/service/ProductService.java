@@ -11,7 +11,7 @@ public interface ProductService {
 
     ResponseEntity<Product> findById(Long id) throws Exception;
 
-    Product update(Product product);
+    ResponseEntity<Product> update(Product product) throws Exception;
 
     boolean delete(Long id) throws Exception;
 

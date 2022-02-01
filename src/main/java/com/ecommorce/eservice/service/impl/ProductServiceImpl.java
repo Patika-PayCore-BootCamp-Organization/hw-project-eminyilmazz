@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
@@ -25,8 +26,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product update(Product product) {
-        return null;
+    public ResponseEntity<Product> update(Product product) throws Exception {
+        if(!productRepository.existsById(product.getId())) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            productRepository.save(product);
+            return ResponseEntity.ok().body(product);
+        }
     }
 
     @Override
