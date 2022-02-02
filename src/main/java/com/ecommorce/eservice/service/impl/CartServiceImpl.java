@@ -1,6 +1,7 @@
 package com.ecommorce.eservice.service.impl;
 
 import com.ecommorce.eservice.model.Cart;
+import com.ecommorce.eservice.model.Customer;
 import com.ecommorce.eservice.model.Product;
 import com.ecommorce.eservice.repository.CartRepository;
 import com.ecommorce.eservice.service.CartService;
@@ -16,7 +17,10 @@ public class CartServiceImpl implements CartService {
     CartRepository cartRepository;
 
     @Override
-    public Cart getCurrentCart() {
+    public Cart getCurrentCart(String token) {
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+        Customer customer = customerService.getByToken(token);
+
         //TODO: Convert to product list.
         return new Cart();
     }
@@ -28,7 +32,6 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void removeItem(Integer productId) {
-        Cart cart = getCurrentCart();
     }
 
     @Override

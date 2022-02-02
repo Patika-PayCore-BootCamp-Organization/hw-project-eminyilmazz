@@ -9,5 +9,5 @@ public interface CartService {
     void checkout();
     void removeItem(Integer productId);
     void confirmPayment();
-    Cart getCurrentCart();
+    Cart getCurrentCart(String token);
 }
