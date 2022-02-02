@@ -1,5 +1,7 @@
 package com.ecommorce.eservice.service.impl;
 
+import com.ecommorce.eservice.dto.mapper.ProductMapper;
+import com.ecommorce.eservice.dto.product.ProductDto;
 import com.ecommorce.eservice.model.Product;
 import com.ecommorce.eservice.repository.ProductRepository;
 import com.ecommorce.eservice.service.ProductService;
@@ -8,14 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
     @Override
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<ProductDto> findAll() {
+        List<ProductDto> productDtos = productRepository.findAll()
+                                                        .stream()
+                                                        .map(ProductMapper::toDto)
+                                                        .collect(Collectors.toList());
+        return productDtos;
     }
 
     @Override
@@ -36,19 +43,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean delete(Long id) throws Exception{
+    public ResponseEntity delete(Long id){
         if(!productRepository.existsById(id)){
-            throw new Exception("Product ID: " + id + "not found.");
+            return ResponseEntity.notFound().build();
         }else{
             productRepository.deleteById(id);
-            return true;
+            return ResponseEntity.ok("Product ID: " + " is deleted.");
+
         }
     }
 
     @Override
     public ResponseEntity<Product> save(Product product) {
         Product prod = productRepository.save(product);
-
         return ResponseEntity.ok().body(prod);
     }
 }

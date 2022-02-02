@@ -3,7 +3,6 @@ package com.ecommorce.eservice.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @Entity
@@ -15,10 +14,20 @@ public class Product {
     @Getter
     private Long id;
 
-    @NotBlank
     @Column(name = "product_name")
+    @Getter
     private String name;
 
+    @Column(name = "price")
+    @Getter
+    private float price;
+
     @Column(name = "image_url", nullable = true)
+    @Getter
     private String imageUrl;
+
+    public Product(String name, float price) {
+        this.name = name;
+        this. price = price;
+    }
 }
