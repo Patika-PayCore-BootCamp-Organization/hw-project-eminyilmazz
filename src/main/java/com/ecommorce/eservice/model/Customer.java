@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
+import java.util.UUID;
 
 
 @NoArgsConstructor
@@ -20,6 +20,9 @@ public class Customer{
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "token")
+    private String token;
 
     @NotBlank
     @Column(name = "name")
@@ -34,11 +37,14 @@ public class Customer{
     @Column(name = "password")
     private String password;
 
+    public Customer(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.token = UUID.randomUUID().toString();
 
-//    @Column
-//    private List<Order> orderHistory;
+    }
 
-
-//    @Column
-//    private Cart userCart;
+//    @ManyToOne(targetEntity = Order.class, fetch = FetchType.LAZY)
+//    private Order orderHistory;
 }
