@@ -5,18 +5,20 @@ import com.ecommorce.eservice.model.Product;
 import com.ecommorce.eservice.repository.CartRepository;
 import com.ecommorce.eservice.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CartServiceImpl implements CartService {
 
     @Autowired
     CartRepository cartRepository;
 
     @Override
-    public List<Cart> getCurrentCart() {
+    public Cart getCurrentCart() {
         //TODO: Convert to product list.
-        return cartRepository.findAll();
+        return new Cart();
     }
 
     @Override
@@ -25,8 +27,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void removeItem(Product product) {
-
+    public void removeItem(Integer productId) {
+        Cart cart = getCurrentCart();
     }
 
     @Override

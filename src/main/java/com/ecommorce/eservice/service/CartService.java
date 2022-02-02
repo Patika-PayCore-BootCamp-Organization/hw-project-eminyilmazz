@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CartService {
     void checkout();
-    void removeItem(Product product);
+    void removeItem(Integer productId);
     void confirmPayment();
-    List<Cart> getCurrentCart();
+    Cart getCurrentCart();
 }
