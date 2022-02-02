@@ -1,10 +1,11 @@
 package com.ecommorce.eservice.controller;
 
+import com.ecommorce.eservice.model.Cart;
 import com.ecommorce.eservice.model.Product;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.ecommorce.eservice.service.impl.CartServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -12,7 +13,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/cart")
 public class CartController {
+    @Autowired
+    private CartServiceImpl cartService;
+
     @GetMapping("/current")
-    public List<Product> getCurrentCart () {return null;}
+    public Cart getCurrentCart () {return cartService.getCurrentCart();}
+
+    @DeleteMapping("/delete")
+    public void deleteProduct (@RequestParam(name = "product-id") Integer productId)
+    {
+        cartService.removeItem(productId);
+    }
+
+
 
 }

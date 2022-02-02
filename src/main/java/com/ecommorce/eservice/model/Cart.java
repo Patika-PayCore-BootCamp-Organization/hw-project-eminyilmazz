@@ -1,11 +1,11 @@
 package com.ecommorce.eservice.model;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
-import java.util.List;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "current_cart")
@@ -14,5 +14,12 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    private List<Product> products;
+
+    @OneToOne(targetEntity = Customer.class)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @ManyToOne(targetEntity = Product.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product products;
 }
