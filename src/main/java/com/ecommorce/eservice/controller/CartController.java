@@ -17,7 +17,7 @@ public class CartController {
     private CartServiceImpl cartService;
 
     @GetMapping("/current")
-    public Cart getCurrentCart (@RequestParam(name = "token") String userToken) throws IllegalAuthenticationException {
+    public Cart getCurrentCart(@RequestParam(name = "token") String userToken) throws IllegalAuthenticationException {
         AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
         authenticationService.authenticateToken(userToken);
         return cartService.getCurrentCart(userToken);
@@ -29,7 +29,6 @@ public class CartController {
 //    {
 //        cartService.removeItem(productId);
 //    }
-
 
 
 }

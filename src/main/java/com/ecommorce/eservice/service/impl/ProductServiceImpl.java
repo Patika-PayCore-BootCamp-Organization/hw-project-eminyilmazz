@@ -2,6 +2,7 @@ package com.ecommorce.eservice.service.impl;
 
 import com.ecommorce.eservice.dto.mapper.ProductMapper;
 import com.ecommorce.eservice.dto.product.ProductDto;
+import com.ecommorce.eservice.exception.NotFoundException;
 import com.ecommorce.eservice.model.Product;
 import com.ecommorce.eservice.repository.ProductRepository;
 import com.ecommorce.eservice.service.ProductService;
@@ -16,26 +17,28 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+
     @Override
     public List<ProductDto> findAll() {
         List<ProductDto> productDtos = productRepository.findAll()
-                                                        .stream()
-                                                        .map(ProductMapper::toDto)
-                                                        .collect(Collectors.toList());
+                .stream()
+                .map(ProductMapper::toDto)
+                .collect(Collectors.toList());
         return productDtos;
     }
 
     @Override
-    public ResponseEntity<Product> findById(Long productId) throws Exception {
+    public ResponseEntity<Product> findById(Long productId) throws NotFoundException {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new Exception ("Product ID: " + productId + " not found"));
+                .orElseThrow(() -> new NotFoundException("Product ID: " + productId + " not found"));
         return ResponseEntity.ok().body(product);
     }
 
     @Override
-    public ResponseEntity<Product> update(Product product) throws Exception {
-        if(!productRepository.existsById(product.getId())) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<Product> update(Product product) throws NotFoundException {
+        if (!productRepository.existsById(product.getProductId())) {
+            throw new NotFoundException
+                    ("@DeleteMapping Product ID = " + product.getProductId() + " is not found.\n");
         } else {
             productRepository.save(product);
             return ResponseEntity.ok().body(product);
@@ -43,10 +46,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity delete(Long id){
-        if(!productRepository.existsById(id)){
-            return ResponseEntity.notFound().build();
-        }else{
+    public ResponseEntity delete(Long id) throws NotFoundException {
+        if (!productRepository.existsById(id)) {
+            throw new NotFoundException
+                    ("@DeleteMapping Product ID = " + id + " is not found.\n");
+        } else {
             productRepository.deleteById(id);
             return ResponseEntity.ok("Product ID: " + " is deleted.");
 
