@@ -4,11 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -16,15 +14,22 @@ import java.time.LocalDateTime;
 @Table(name = "orders")
 public class Order {
     @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "order_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long orderId;
 
     @Column(name = "user_purchased")
     private Long userPurchased;
 
     @Column(name = "total_price")
     private float totalPrice;
-//    private List<Product> productList;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            targetEntity = Product.class)
+    @JoinColumn(name = "product_id",
+            referencedColumnName = "productId")
+    private List<Product> productList;
 
     @Column(name = "billing_address")
     private String billingAddress;

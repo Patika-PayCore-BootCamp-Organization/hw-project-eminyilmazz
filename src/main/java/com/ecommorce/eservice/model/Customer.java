@@ -14,12 +14,12 @@ import java.util.UUID;
 @Entity
 @Getter
 @Table(name = "customer_info")
-public class Customer{
+public class Customer {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "customer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long customerId;
 
     @Column(name = "token")
     private String token;
@@ -44,7 +44,4 @@ public class Customer{
         this.token = UUID.randomUUID().toString();
 
     }
-
-//    @ManyToOne(targetEntity = Order.class, fetch = FetchType.LAZY)
-//    private Order orderHistory;
 }

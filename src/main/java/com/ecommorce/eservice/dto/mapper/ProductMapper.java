@@ -6,9 +6,10 @@ import com.ecommorce.eservice.model.Product;
 public class ProductMapper {
     public static ProductDto toDto(Product product) {
         return new ProductDto(product.getName(),
-                              product.getPrice());
+                product.getPrice());
     }
-    public static Product toEntity (ProductDto productDto) {
+
+    public static Product toEntity(ProductDto productDto) {
         return new Product(productDto.getName(), productDto.getPrice());
     }
 }

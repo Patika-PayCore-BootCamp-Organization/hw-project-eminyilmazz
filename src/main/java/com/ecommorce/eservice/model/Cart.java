@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,13 +14,19 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long cartId;
 
-    @OneToOne(targetEntity = Customer.class)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL,
+            targetEntity = Customer.class,
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id",
+            referencedColumnName = "customerId")
     private Customer customer;
 
-    @ManyToOne(targetEntity = Product.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product products;
+    @OneToMany(cascade = CascadeType.ALL,
+            targetEntity = Product.class,
+            fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id",
+            referencedColumnName = "productId")
+    private List<Product> products;
 }
