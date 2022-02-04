@@ -20,9 +20,24 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.getByToken(token).orElse(null);
         return customer;
     }
+
     public ResponseEntity<Customer> save(CustomerDto customerDto) {
         Customer customer = CustomerMapper.toEntity(customerDto);
         return ResponseEntity.ok()
-                             .body(customerRepository.save(customer));
+                .body(customerRepository.save(customer));
     }
+
+    public Iterable<Customer> getAllCustomer() {
+        return customerRepository.findAll();
+    }
+
+    public ResponseEntity deleteCustomer(Long id) {
+        if (!customerRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        } else {
+            customerRepository.deleteById(id);
+            return ResponseEntity.ok("Product ID: " + " is deleted.");
+        }
+    }
+
 }

@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface CartService {
     void checkout();
+
     void removeItem(Integer productId);
+
     void confirmPayment();
+
     Cart getCurrentCart(String token);
 }
