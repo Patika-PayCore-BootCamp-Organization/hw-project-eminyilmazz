@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,10 +15,10 @@ import javax.persistence.*;
 @Table(name = "products")
 public class Product {
     @Id
-    @Column(name = "productId", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    private Long productId;
+    private Long id;
 
     @Column(name = "product_name")
     @Getter
@@ -25,13 +26,19 @@ public class Product {
 
     @Column(name = "price")
     @Getter
-    private float price;
+    private double price;
 
     @Column(name = "image_url")
     @Getter
     private String imageUrl;
 
-    public Product(String name, float price) {
+//    @JsonManagedReference
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "product_id")
+//    @Transient
+//    private Cart cart;
+
+    public Product(String name, @NotNull double price) {
         this.name = name;
         this.price = price;
     }

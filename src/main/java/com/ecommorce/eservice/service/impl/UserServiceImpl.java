@@ -15,8 +15,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     public User getByToken(String token) {
-        User user = userRepository.findByToken(token).orElse(null);
-        return user;
+        return userRepository.findByToken(token).orElse(null);
     }
 
     public ResponseEntity<User> save(UserDto userDto) {

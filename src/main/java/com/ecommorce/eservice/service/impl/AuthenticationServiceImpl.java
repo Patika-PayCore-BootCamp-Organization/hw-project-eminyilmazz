@@ -1,7 +1,7 @@
 package com.ecommorce.eservice.service.impl;
 
 import com.ecommorce.eservice.exception.IllegalAuthenticationException;
-import com.ecommorce.eservice.model.Customer;
+import com.ecommorce.eservice.model.User;
 import com.ecommorce.eservice.service.AuthenticationService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
-    CustomerServiceImpl customerService;
+    UserServiceImpl customerService;
 
-    public Customer getUser(String token) throws IllegalAuthenticationException {
+    public User getUser(String token) throws IllegalAuthenticationException {
         return customerService.getByToken(token);
     }
 
