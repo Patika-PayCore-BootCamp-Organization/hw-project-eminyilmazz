@@ -20,11 +20,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> findAll() {
-        List<ProductDto> productDtos = productRepository.findAll()
-                .stream()
-                .map(ProductMapper::toDto)
-                .collect(Collectors.toList());
-        return productDtos;
+        return productRepository.findAll()
+                                .stream()
+                                .map(ProductMapper::toDto)
+                                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Product> findAllAsProduct() {
+        return productRepository.findAll();
     }
 
     @Override
@@ -36,9 +40,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Product> update(Product product) throws NotFoundException {
-        if (!productRepository.existsById(product.getProductId())) {
+        if (!productRepository.existsById(product.getId())) {
             throw new NotFoundException
-                    ("@DeleteMapping Product ID = " + product.getProductId() + " is not found.\n");
+                    ("@DeleteMapping Product ID = " + product.getId() + " is not found.\n");
         } else {
             productRepository.save(product);
             return ResponseEntity.ok().body(product);

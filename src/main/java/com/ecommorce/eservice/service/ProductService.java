@@ -17,4 +17,6 @@ public interface ProductService {
     ResponseEntity delete(Long id) throws Exception;
 
     ResponseEntity<Product> save(Product product);
+
+    public List<Product> findAllAsProduct();
 }
