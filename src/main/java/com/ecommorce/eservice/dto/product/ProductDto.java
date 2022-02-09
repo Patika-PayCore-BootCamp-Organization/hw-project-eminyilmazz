@@ -14,5 +14,5 @@ public class ProductDto {
     @NotBlank
     private String name;
     @NotNull
-    private float price;
+    private double price;
 }
