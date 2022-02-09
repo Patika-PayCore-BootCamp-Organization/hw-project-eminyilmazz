@@ -12,15 +12,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cart")
-public class CartController {
+public class UserCartController {
     @Autowired
-    private CartServiceImpl cartService;
+    private UserCartServiceImpl userCartService;
+    @Autowired
+    AuthenticationServiceImpl authenticationService;
 
     @GetMapping("/current")
     public Cart getCurrentCart(@RequestParam(name = "token") String userToken) throws IllegalAuthenticationException {
-        AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
         authenticationService.authenticateToken(userToken);
-        return cartService.getCurrentCart(userToken);
+        return userCartService.getCurrentCart(userToken);
     }
 
 

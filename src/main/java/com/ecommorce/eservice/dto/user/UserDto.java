@@ -1,4 +1,4 @@
-package com.ecommorce.eservice.dto.customer;
+package com.ecommorce.eservice.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class CustomerDto {
+public class UserDto {
     @NotBlank
     private String name;
 
@@ -23,5 +23,6 @@ public class CustomerDto {
     @NotBlank
     private String password;
 
-
+    @NotBlank
+    private String username;
 }
