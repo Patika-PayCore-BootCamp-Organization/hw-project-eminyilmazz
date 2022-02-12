@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class UserDto {
+public class UserDto implements Serializable {
     @NotBlank
     private String name;
 
