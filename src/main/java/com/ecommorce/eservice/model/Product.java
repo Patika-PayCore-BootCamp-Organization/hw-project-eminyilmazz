@@ -32,12 +32,6 @@ public class Product {
     @Getter
     private String imageUrl;
 
-//    @JsonManagedReference
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "product_id")
-//    @Transient
-//    private Cart cart;
-
     public Product(String name, @NotNull double price) {
         this.name = name;
         this.price = price;

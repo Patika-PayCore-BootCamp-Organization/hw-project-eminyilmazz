@@ -1,14 +1,10 @@
 package com.ecommorce.eservice.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -31,12 +27,4 @@ public class Cart {
     @ElementCollection
     @Column(name = "product_quantity")
     private Map<Long, Integer> productQuantityMap;
-//    @JsonBackReference
-//    @JsonIgnore
-//    @OneToMany(cascade = CascadeType.ALL,
-//               targetEntity = Product.class,
-//               fetch = FetchType.LAZY)
-//    @JoinColumn(name = "cart_id",
-//                referencedColumnName = "id")
-//    private List<Product> products;
 }
