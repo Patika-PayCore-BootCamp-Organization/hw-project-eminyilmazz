@@ -6,11 +6,13 @@ import com.ecommorce.eservice.model.User;
 import javax.validation.constraints.NotNull;
 
 public class UserMapper {
-    public static UserDto toDto(@NotNull User customer) {
-        return new UserDto(customer.getName(),
-                               customer.getEmail(),
-                               customer.getPassword(),
-                               customer.getUsername());
+    public static UserDto toDto(@NotNull User user) {
+        return UserDto.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .build();
     }
 
     public static User toEntity(@NotNull UserDto userDto) {

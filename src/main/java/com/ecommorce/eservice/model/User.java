@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.*;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Getter
+@Setter
 @Table(name = "users")
 public class User {
 
@@ -26,19 +28,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "token", unique = true)
-    private String token;
-
     @NotBlank
     @Column(name = "name")
     private String name;
 
     @NotBlank
-    @Column(name = "username", unique = true)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
     @NotBlank
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     @Email
     private String email;
 
@@ -46,23 +45,16 @@ public class User {
     @Column(name = "password")
     private String password;
 
-//    @OneToMany(cascade = CascadeType.ALL,
-//               targetEntity = Order.class,
-//               fetch = FetchType.LAZY)
-//    @JoinColumn(name = "order_id",
-//                referencedColumnName = "orderId")
-//    @JsonBackReference
-//    private List<Order> orderHistory;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles", joinColumns = {
+            @JoinColumn(name = "user_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "role_id")})
+    public List<Role> roles;
 
     public User(String email, String name, String password, String username) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.username = username;
-    }
-
-    @PostConstruct
-    public void tokenInit() {
-        this.token = UUID.randomUUID().toString();
     }
 }

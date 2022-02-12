@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = Order.builder()
                     .totalPrice(totalPrice)
                     .userPurchased(userPurchased)
-                    .billingAddress(address)
+                    .address(address)
                     .build();
         orderProducer.onOrder(order);
         return order;

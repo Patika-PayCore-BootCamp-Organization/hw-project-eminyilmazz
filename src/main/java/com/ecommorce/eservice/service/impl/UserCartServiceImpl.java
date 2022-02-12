@@ -1,6 +1,7 @@
 package com.ecommorce.eservice.service.impl;
 
 import com.ecommorce.eservice.dto.CartProductDto;
+import com.ecommorce.eservice.exception.NotFoundException;
 import com.ecommorce.eservice.model.Cart;
 import com.ecommorce.eservice.model.Order;
 import com.ecommorce.eservice.model.User;
@@ -25,14 +26,15 @@ public class UserCartServiceImpl implements UserCartService {
     OrderServiceImpl orderService;
 
     @Override
-    public Cart getCurrentCart(String token) {
-        User user = userService.getByToken(token);
-        return userCartRepository.findCartByUser_Id(user.getId());
+    public Cart getCurrentCart(String username) {
+        User user = userService.getUserByUsername(username);
+        if(user != null) return userCartRepository.findCartByUser_Id(user.getId());
+        else throw new NotFoundException("User: " + username + " not found.");
     }
 
     @Override
     public Cart addProductToCart(@NotNull CartProductDto addableProduct) {
-        Cart cart = userCartRepository.findCartByUser_token(addableProduct.getUserToken());
+        Cart cart = userCartRepository.findCartByUser_Username(addableProduct.getUsername());
         Long productId = addableProduct.getProductId();
         Integer amountToAdd = addableProduct.getAmount();
         Map<Long, Integer> cartMap = cart.getProductQuantityMap();
@@ -47,8 +49,8 @@ public class UserCartServiceImpl implements UserCartService {
     }
 
     @Override
-    public ResponseEntity<Order> checkout(String token, String address) {
-        Cart cart = userCartRepository.findCartByUser_token(token);
+    public ResponseEntity<Order> checkout(String username, String address) {
+        Cart cart = userCartRepository.findCartByUser_Username(username);
         Order order = orderService.fillOrder(cart, address);
         orderService.save(order);
         userCartRepository.delete(cart);
@@ -57,7 +59,7 @@ public class UserCartServiceImpl implements UserCartService {
 
     @Override
     public ResponseEntity<String> removeItemFromCart(@NotNull CartProductDto removableProduct) {
-        Cart cart = userCartRepository.findCartByUser_token(removableProduct.getUserToken());
+        Cart cart = userCartRepository.findCartByUser_Username(removableProduct.getUsername());
         Map<Long, Integer> cartMap = cart.getProductQuantityMap();
         Long productId = removableProduct.getProductId();
         if(!cartMap.containsKey(productId)) return ResponseEntity.notFound().build();
