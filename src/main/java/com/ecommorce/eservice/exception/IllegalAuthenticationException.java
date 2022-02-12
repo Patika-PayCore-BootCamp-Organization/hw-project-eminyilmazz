@@ -1,7 +1,9 @@
 package com.ecommorce.eservice.exception;
 
-public class IllegalAuthenticationException extends IllegalArgumentException {
-    public IllegalAuthenticationException(String message) {
-        super("IllegalAuthenticationException: \n" + message);
+import org.springframework.http.HttpStatus;
+
+public class IllegalAuthenticationException extends RuntimeException {
+    public IllegalAuthenticationException(String message, HttpStatus httpStatus) {
+        super("Status: " + httpStatus + "\n" + "IllegalAuthenticationException: \n" + message);
     }
 }

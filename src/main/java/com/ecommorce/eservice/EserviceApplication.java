@@ -1,6 +1,5 @@
 package com.ecommorce.eservice;
 
-import com.ecommorce.eservice.model.Customer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
