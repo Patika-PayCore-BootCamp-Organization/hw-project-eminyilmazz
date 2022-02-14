@@ -5,6 +5,7 @@ import com.ecommorce.eservice.model.Product;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductService {
 

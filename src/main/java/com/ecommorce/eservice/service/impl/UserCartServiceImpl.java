@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Map;
 
 @Service
@@ -36,8 +37,12 @@ public class UserCartServiceImpl implements UserCartService {
     public Cart addProductToCart(@NotNull CartProductDto addableProduct) {
         Cart cart = userCartRepository.findCartByUser_Username(addableProduct.getUsername());
         Long productId = addableProduct.getProductId();
+        System.out.println(cart);
         Integer amountToAdd = addableProduct.getAmount();
-        Map<Long, Integer> cartMap = cart.getProductQuantityMap();
+        Map<Long, Integer> cartMap = Collections.emptyMap();
+        if(cart.getProductQuantityMap() != null) {
+            cartMap = cart.getProductQuantityMap();
+        }
         if(cartMap.containsKey(productId)) {
             Integer existingAmount = cartMap.get(productId);
             cartMap.replace(productId, amountToAdd + existingAmount);

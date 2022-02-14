@@ -1,5 +1,6 @@
 package com.ecommorce.eservice.service;
 
+import com.ecommorce.eservice.dto.product.ProductDto;
 import com.ecommorce.eservice.model.Cart;
 import com.ecommorce.eservice.model.Order;
 
@@ -10,5 +11,7 @@ public interface OrderService {
 
     double calculateTotalPrice(Map<Long, Integer> quantityMap);
 
-    public void save(Order order);
+    void save(Order order);
+
+    Map<ProductDto, Integer> productQuantityMapper(Map<Long, Integer> quantityMap);
 }

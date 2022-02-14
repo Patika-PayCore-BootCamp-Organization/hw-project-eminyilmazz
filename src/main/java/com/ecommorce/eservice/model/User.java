@@ -1,19 +1,15 @@
 package com.ecommorce.eservice.model;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.UUID;
-
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,13 +39,18 @@ public class User {
 
     @NotBlank
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = {
             @JoinColumn(name = "user_id")}, inverseJoinColumns = {
             @JoinColumn(name = "role_id")})
-    public List<Role> roles;
+    @JsonIgnore
+    private List<Role> roles;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Cart cart;
 
     public User(String email, String name, String password, String username) {
         this.email = email;

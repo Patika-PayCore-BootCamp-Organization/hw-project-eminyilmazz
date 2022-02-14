@@ -20,11 +20,11 @@ public class Cart {
 
     @OneToOne(cascade = CascadeType.ALL,
               targetEntity = User.class,
-              fetch = FetchType.LAZY)
+              fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "product_quantity")
     private Map<Long, Integer> productQuantityMap;
 }

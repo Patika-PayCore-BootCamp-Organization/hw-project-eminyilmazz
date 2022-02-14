@@ -1,6 +1,7 @@
 package com.ecommorce.eservice.dto.mapper;
 
 import com.ecommorce.eservice.dto.user.UserDto;
+import com.ecommorce.eservice.model.Cart;
 import com.ecommorce.eservice.model.User;
 
 import javax.validation.constraints.NotNull;

@@ -1,5 +1,6 @@
 package com.ecommorce.eservice.model;
 
+import com.ecommorce.eservice.dto.product.ProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Entity
 @NoArgsConstructor
@@ -35,4 +37,6 @@ public class Order implements Serializable {
     @CreationTimestamp
     private LocalDateTime orderDate;
 
+    @Transient
+    private Map<ProductDto, Integer> productQuantity;
 }
