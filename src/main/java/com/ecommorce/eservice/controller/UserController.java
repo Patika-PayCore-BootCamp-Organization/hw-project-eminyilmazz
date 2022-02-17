@@ -4,8 +4,8 @@ package com.ecommorce.eservice.controller;
 import com.ecommorce.eservice.dto.user.UserDto;
 import com.ecommorce.eservice.dto.user.UserLoginDto;
 import com.ecommorce.eservice.model.User;
-import com.ecommorce.eservice.service.impl.UserSecurityServiceImpl;
-import com.ecommorce.eservice.service.impl.UserServiceImpl;
+import com.ecommorce.eservice.service.UserSecurityService;
+import com.ecommorce.eservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
     @Autowired
-    UserSecurityServiceImpl userSecurityService;
+    UserSecurityService userSecurityService;
 
 
     @GetMapping("/all")

@@ -49,9 +49,6 @@ public class User {
     @JsonIgnore
     private List<Role> roles;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Cart cart;
-
     public User(String email, String name, String password, String username) {
         this.email = email;
         this.name = name;

@@ -6,7 +6,9 @@ import com.ecommorce.eservice.model.Cart;
 import com.ecommorce.eservice.model.Order;
 import com.ecommorce.eservice.model.User;
 import com.ecommorce.eservice.repository.UserCartRepository;
+import com.ecommorce.eservice.service.OrderService;
 import com.ecommorce.eservice.service.UserCartService;
+import com.ecommorce.eservice.service.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,14 +24,14 @@ public class UserCartServiceImpl implements UserCartService {
     @Autowired
     UserCartRepository userCartRepository;
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
     @Autowired
-    OrderServiceImpl orderService;
+    OrderService orderService;
 
     @Override
-    public Cart getCurrentCart(String username) {
+    public Map<Long, Integer> getCurrentCart(String username) {
         User user = userService.getUserByUsername(username);
-        if(user != null) return userCartRepository.findCartByUser_Id(user.getId());
+        if(user != null) return userCartRepository.findCartByUser_Id(user.getId()).getProductQuantityMap();
         else throw new NotFoundException("User: " + username + " not found.");
     }
 
@@ -58,7 +60,8 @@ public class UserCartServiceImpl implements UserCartService {
         Cart cart = userCartRepository.findCartByUser_Username(username);
         Order order = orderService.fillOrder(cart, address);
         orderService.save(order);
-        userCartRepository.delete(cart);
+        cart.setProductQuantityMap(Collections.emptyMap());
+        userCartRepository.save(cart);
         return ResponseEntity.ok(order);
     }
 

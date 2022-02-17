@@ -5,21 +5,23 @@ import com.ecommorce.eservice.exception.IllegalAuthenticationException;
 import com.ecommorce.eservice.exception.IllegalBodyException;
 import com.ecommorce.eservice.model.Cart;
 import com.ecommorce.eservice.model.Order;
-import com.ecommorce.eservice.service.impl.UserCartServiceImpl;
+import com.ecommorce.eservice.service.UserCartService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
 @RequestMapping("/cart")
 public class UserCartController {
     @Autowired
-    private UserCartServiceImpl userCartService;
+    private UserCartService userCartService;
 
     @GetMapping("/current")
-    public Cart getCurrentCart(@RequestParam(name = "username") String username) {
+    public Map<Long, Integer> getCurrentCart(@RequestParam(name = "username") String username) {
         return userCartService.getCurrentCart(username);
     }
 

@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.ecommorce.eservice.dto.mapper.ProductMapper.toDto;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -42,11 +45,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Map<ProductDto, Integer> productQuantityMapper(Map<Long, Integer> quantityMap) {
-        Map<ProductDto, Integer> productQuantityMap = Collections.emptyMap();
-        quantityMap.entrySet().stream().map(entry ->
-            productQuantityMap.put
-                    (ProductMapper.toDto(productService.findById(entry.getKey())
-                                                        .getBody()), entry.getValue())).close();
+        Map<ProductDto, Integer> productQuantityMap = new HashMap<ProductDto, Integer>();
+        for (Map.Entry<Long, Integer> entry : quantityMap.entrySet()) {
+            productQuantityMap.put(toDto(productService.findById(entry.getKey()).getBody()), entry.getValue());
+        }
         return productQuantityMap;
     }
     @Override

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -18,13 +20,20 @@ public class Cart {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL,
-              targetEntity = User.class,
-              fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+//    @OneToOne(cascade = CascadeType.ALL,
+//              targetEntity = User.class,
+//              fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+    @MapsId
     private User user;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "product_quantity")
     private Map<Long, Integer> productQuantityMap;
+
+    public Cart(User user) {
+        this.user = user;
+        this.productQuantityMap = Collections.emptyMap();
+    }
 }
