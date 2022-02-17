@@ -39,12 +39,13 @@ public class UserSecurityServiceImpl implements UserSecurityService {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginDto.getUsername(), userLoginDto.getPassword()));
             Optional<User> user = userRepository.findByUsername(userLoginDto.getUsername());
             List<Role> roles = null;
-            if(user.isPresent()) roles = user.get().getRoles();
+            if (user.isPresent()) roles = user.get().getRoles();
             return jwtTokenProvider.createToken(userLoginDto.getUsername(), roles);
         } catch (AuthenticationException e) {
             throw new IllegalAuthenticationException("Provided username/password invalid", HttpStatus.BAD_REQUEST);
         }
     }
+
     public Map<User, String> signupEncoding(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Collections.singletonList(roleRepository.getById(2L)));

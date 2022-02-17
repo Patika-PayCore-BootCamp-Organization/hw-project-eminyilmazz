@@ -25,11 +25,9 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenProvider {
+    private final long validityInMilliseconds = 1000 * 60 * 60 * 24;
     @Value("${security.jwt.token.secret-key:alsoverysecretkey}")
     private String secretKey;
-
-    private final long validityInMilliseconds = 1000 * 60 * 60 * 24;
-
     @Autowired
     private MyUserDetails myUserDetails;
 

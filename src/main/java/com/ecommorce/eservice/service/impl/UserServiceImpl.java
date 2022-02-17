@@ -1,7 +1,7 @@
 package com.ecommorce.eservice.service.impl;
 
-import com.ecommorce.eservice.dto.user.UserDto;
 import com.ecommorce.eservice.dto.mapper.UserMapper;
+import com.ecommorce.eservice.dto.user.UserDto;
 import com.ecommorce.eservice.exception.IllegalAuthenticationException;
 import com.ecommorce.eservice.exception.NotFoundException;
 import com.ecommorce.eservice.model.Cart;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
-        if(!user.isPresent()) throw new NotFoundException("User: " + username + " not found.");
+        if (!user.isPresent()) throw new NotFoundException("User: " + username + " not found.");
         else return UserMapper.toDto(userRepository.findByUsername(username).get());
     }
 
@@ -40,13 +40,12 @@ public class UserServiceImpl implements UserService {
 
     public String signup(UserDto userDto) {
         User user = UserMapper.toEntity(userDto);
-        if(!userRepository.existsByUsername(userDto.getUsername())) {
+        if (!userRepository.existsByUsername(userDto.getUsername())) {
             Map<User, String> singletonMap = userSecurityService.signupEncoding(user);
             user = userRepository.save(singletonMap.keySet().stream().findFirst().get());
             userCartRepository.save(new Cart(user));
             return singletonMap.values().toString();
-        }
-        else throw new IllegalAuthenticationException("Username already exists.", HttpStatus.BAD_REQUEST);
+        } else throw new IllegalAuthenticationException("Username already exists.", HttpStatus.BAD_REQUEST);
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.ecommorce.eservice.model.Product;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ProductService {
 
@@ -19,5 +18,5 @@ public interface ProductService {
 
     ResponseEntity<Product> save(Product product);
 
-    public List<Product> findAllAsProduct();
+    List<Product> findAllAsProduct();
 }

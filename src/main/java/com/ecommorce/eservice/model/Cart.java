@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
@@ -20,10 +19,6 @@ public class Cart {
     @Column(name = "id", nullable = false)
     private Long id;
 
-//    @OneToOne(cascade = CascadeType.ALL,
-//              targetEntity = User.class,
-//              fetch = FetchType.EAGER)
-//    @JoinColumn(name = "user_id")
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
     @MapsId
     private User user;

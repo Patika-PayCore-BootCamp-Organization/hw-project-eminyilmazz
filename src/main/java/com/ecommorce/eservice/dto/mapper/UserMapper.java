@@ -1,12 +1,14 @@
 package com.ecommorce.eservice.dto.mapper;
 
 import com.ecommorce.eservice.dto.user.UserDto;
-import com.ecommorce.eservice.model.Cart;
 import com.ecommorce.eservice.model.User;
 
 import javax.validation.constraints.NotNull;
 
 public class UserMapper {
+    private UserMapper() {
+    }
+
     public static UserDto toDto(@NotNull User user) {
         return UserDto.builder()
                 .name(user.getName())
@@ -22,6 +24,4 @@ public class UserMapper {
                 userDto.getPassword(),
                 userDto.getUsername());
     }
-
-    private UserMapper(){}
 }

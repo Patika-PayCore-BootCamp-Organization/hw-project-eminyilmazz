@@ -26,18 +26,19 @@ public class UserCartController {
     }
 
     @PutMapping("/add-item")
-    public Cart addProductToCart(@RequestBody CartProductDto addableProduct){
-        if(addableProduct.getAmount() == null) addableProduct.setAmount(1);
+    public Cart addProductToCart(@RequestBody CartProductDto addableProduct) {
+        if (addableProduct.getAmount() == null) addableProduct.setAmount(1);
         return userCartService.addProductToCart(addableProduct);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity removeProductFromCart (@RequestBody CartProductDto removableProduct) throws IllegalAuthenticationException {
+    public ResponseEntity removeProductFromCart(@RequestBody CartProductDto removableProduct) throws IllegalAuthenticationException {
         return userCartService.removeItemFromCart(removableProduct);
     }
+
     @PostMapping("/checkout")
     public ResponseEntity<Order> checkout(@RequestParam(name = "username") String username, @RequestBody ObjectNode objectNode) throws IllegalBodyException {
-        if(!objectNode.has("address")) throw new IllegalBodyException("Address. @PostMapping /cart/checkout.");
+        if (!objectNode.has("address")) throw new IllegalBodyException("Address. @PostMapping /cart/checkout.");
         String address = objectNode.get("address").asText("Address is not provided.");
         return userCartService.checkout(username, address);
     }

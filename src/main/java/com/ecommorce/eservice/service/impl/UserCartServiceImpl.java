@@ -31,7 +31,7 @@ public class UserCartServiceImpl implements UserCartService {
     @Override
     public Map<Long, Integer> getCurrentCart(String username) {
         User user = userService.getUserByUsername(username);
-        if(user != null) return userCartRepository.findCartByUser_Id(user.getId()).getProductQuantityMap();
+        if (user != null) return userCartRepository.findCartByUser_Id(user.getId()).getProductQuantityMap();
         else throw new NotFoundException("User: " + username + " not found.");
     }
 
@@ -39,13 +39,12 @@ public class UserCartServiceImpl implements UserCartService {
     public Cart addProductToCart(@NotNull CartProductDto addableProduct) {
         Cart cart = userCartRepository.findCartByUser_Username(addableProduct.getUsername());
         Long productId = addableProduct.getProductId();
-        System.out.println(cart);
         Integer amountToAdd = addableProduct.getAmount();
         Map<Long, Integer> cartMap = Collections.emptyMap();
-        if(cart.getProductQuantityMap() != null) {
+        if (cart.getProductQuantityMap() != null) {
             cartMap = cart.getProductQuantityMap();
         }
-        if(cartMap.containsKey(productId)) {
+        if (cartMap.containsKey(productId)) {
             Integer existingAmount = cartMap.get(productId);
             cartMap.replace(productId, amountToAdd + existingAmount);
         } else {
@@ -70,13 +69,13 @@ public class UserCartServiceImpl implements UserCartService {
         Cart cart = userCartRepository.findCartByUser_Username(removableProduct.getUsername());
         Map<Long, Integer> cartMap = cart.getProductQuantityMap();
         Long productId = removableProduct.getProductId();
-        if(!cartMap.containsKey(productId)) return ResponseEntity.notFound().build();
+        if (!cartMap.containsKey(productId)) return ResponseEntity.notFound().build();
 
         else cartMap.remove(productId);
 
         cart.setProductQuantityMap(cartMap);
         userCartRepository.save(cart);
         return ResponseEntity.status(HttpStatus.OK)
-                             .body("Product is removed from your cart");
+                .body("Product is removed from your cart");
     }
 }
